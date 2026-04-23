@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(java -version)",
+      "Bash(mvn -version)",
+      "Bash(npm --version)",
+      "Bash(npx -v)",
+      "Bash(mvn -q -DskipTests compile)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(mvn -q -DskipTests spring-boot:run)",
+      "Bash(tee /tmp/docsearch-boot.log)",
+      "Bash(curl -sf -o /dev/null http://localhost:8080/api/documents/search?size=1)",
+      "Bash(kill %1)",
+      "Bash(wait curl *)",
+      "Bash(curl -s 'http://localhost:8080/api/documents/search?q=Nguyen&size=5')",
+      "Bash(curl -s 'http://localhost:8080/api/documents/22222222-2222-2222-2222-000000000001')",
+      "Bash(curl -s -o /tmp/qr1.png -w 'qr status=%{http_code} size=%{size_download}\\\\n' 'http://localhost:8080/api/documents/22222222-2222-2222-2222-000000000001/qr.png')",
+      "Read(//tmp/**)",
+      "Bash(curl -s -o /dev/null -w 'me\\(guest\\) status=%{http_code}\\\\n' 'http://localhost:8080/api/auth/me')",
+      "Bash(xargs kill *)",
+      "Bash(curl -sf -o /dev/null 'http://localhost:8080/api/documents/search?size=1')",
+      "Bash(npm install *)",
+      "Bash(npx ng *)",
+      "Bash(curl -sf -o /dev/null 'http://localhost:4200/')",
+      "Bash(curl -s 'http://localhost:4200/')",
+      "Bash(curl -si -X OPTIONS http://localhost:8080/api/documents/search -H 'Origin: http://localhost:4200' -H 'Access-Control-Request-Method: GET' -H 'Access-Control-Request-Headers: Authorization')",
+      "Bash(docker --version)"
+    ]
+  }
+}

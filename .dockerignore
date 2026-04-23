@@ -1,0 +1,14 @@
+**/node_modules
+**/dist
+**/.angular
+**/target
+**/.mvn
+**/.idea
+**/.vscode
+**/.DS_Store
+**/seed-output
+**/*.log
+.git
+.github
+PLAN.md
+README.md
