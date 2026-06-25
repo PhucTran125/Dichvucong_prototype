@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -27,16 +29,33 @@ public class QrService {
         this.props = props;
     }
 
-    public String deepLinkFor(UUID documentId) {
+    private String base() {
         String base = props.getPublicBaseUrl();
-        if (base.endsWith("/")) {
-            base = base.substring(0, base.length() - 1);
-        }
-        return base + "/search?id=" + documentId;
+        return base.endsWith("/") ? base.substring(0, base.length() - 1) : base;
+    }
+
+    public String deepLinkFor(UUID documentId) {
+        return base() + "/search?id=" + documentId;
+    }
+
+    /**
+     * Deep-link encoded in a Phiếu LLTP's QR (Điều 17): lands on the officer-gated verification
+     * page with the certificate number pre-filled, ready for the cán bộ to enter the other fields.
+     * The {@code signature} arg is kept for call-site stability but is no longer part of the link.
+     */
+    public String deepLinkForCertificate(String documentNo, String signature) {
+        return base() + "/verify?doc=" + URLEncoder.encode(documentNo, StandardCharsets.UTF_8);
+    }
+
+    public byte[] pngForCertificate(String documentNo, String signature) {
+        return png(deepLinkForCertificate(documentNo, signature));
     }
 
     public byte[] pngFor(UUID documentId) {
-        String link = deepLinkFor(documentId);
+        return png(deepLinkFor(documentId));
+    }
+
+    private byte[] png(String link) {
         try {
             Map<EncodeHintType, Object> hints = new HashMap<>();
             hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.M);
@@ -47,7 +66,7 @@ public class QrService {
             MatrixToImageWriter.writeToStream(matrix, "PNG", baos);
             return baos.toByteArray();
         } catch (WriterException | IOException e) {
-            throw new IllegalStateException("Failed to render QR for " + documentId, e);
+            throw new IllegalStateException("Failed to render QR for " + link, e);
         }
     }
 }

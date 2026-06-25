@@ -21,6 +21,9 @@
         <java.version>21</java.version>
         <zxing.version>3.5.3</zxing.version>
         <jjwt.version>0.12.6</jjwt.version>
+        <!-- Oracle 19c JDBC thin driver: certified to connect to Oracle DB 11.2.0.4+ on Java 8+.
+             Do not bump to 21c/23c if you must keep talking to Oracle 11g. -->
+        <oracle.ojdbc.version>19.23.0.0</oracle.ojdbc.version>
     </properties>
 
     <dependencies>
@@ -45,9 +48,19 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
+        <!-- Default profile: in-memory H2 (no DB required, used by tests / offline dev) -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- 'oracle' profile: connect to Oracle 11g. Explicit version pins ojdbc8 19.x
+             (Spring Boot's BOM would otherwise manage this to 23.x, which drops 11g support). -->
+        <dependency>
+            <groupId>com.oracle.database.jdbc</groupId>
+            <artifactId>ojdbc8</artifactId>
+            <version>${oracle.ojdbc.version}</version>
             <scope>runtime</scope>
         </dependency>
 

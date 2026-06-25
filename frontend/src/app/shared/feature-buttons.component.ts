@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-feature-buttons',
   standalone: true,
+  imports: [RouterLink],
   template: `
     <div class="feature-row">
-      <button class="feature-btn">Dịch vụ công trực tuyến</button>
+      <a class="feature-btn" routerLink="/verify">Xác thực Phiếu lý lịch tư pháp</a>
       <button class="feature-btn">Dịch vụ công trực tuyến của Đảng</button>
       <button class="feature-btn">Dịch vụ công liên thông: Khai sinh, Khai tử</button>
     </div>
@@ -18,6 +20,13 @@ import { Component } from '@angular/core';
       margin-top: 24px;
     }
     .feature-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
       background: var(--color-ochre);
       color: var(--color-white);
       padding: 22px 16px;

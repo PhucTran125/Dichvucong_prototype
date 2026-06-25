@@ -16,6 +16,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
         <a routerLink="/" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           Thông tin và dịch vụ <span class="caret">▾</span>
         </a>
+        <a routerLink="/verify" class="nav-item" routerLinkActive="active">Xác thực Phiếu LLTP</a>
+        <a routerLink="/tao-qr-test" class="nav-item" routerLinkActive="active">Tạo mã QR (Test)</a>
         <a routerLink="/payments" class="nav-item" routerLinkActive="active">Thanh toán trực tuyến</a>
         <a routerLink="/feedback" class="nav-item" routerLinkActive="active">
           Phản ánh kiến nghị <span class="caret">▾</span>

@@ -10,6 +10,7 @@ CREATE TABLE app_user (
   dob             DATE          NOT NULL,
   citizen_id      VARCHAR(20)   NOT NULL UNIQUE,
   address         VARCHAR(256)  NOT NULL,
+  account_type    VARCHAR(16)   NOT NULL DEFAULT 'CITIZEN',
   created_at      TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -63,3 +64,8 @@ CREATE TABLE oauth_auth_code (
 );
 
 CREATE INDEX idx_auth_code_expires ON oauth_auth_code(expires_at);
+
+-- LLTP tables (declaration / synthesis_verification / judgment / ban_position) are created by
+-- Hibernate on H2 (spring.jpa.hibernate.ddl-auto=update) — the Declaration entity maps ~160
+-- columns, impractical to hand-mirror. Demo rows are seeded by data-lltp-demo.sql. Under the
+-- 'oracle' profile they are the real DBDaotao tables and Hibernate does not manage them.

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { officerGuard } from './core/officer.guard';
 
 export const routes: Routes = [
   {
@@ -12,6 +13,22 @@ export const routes: Routes = [
   {
     path: 'documents/:id',
     loadComponent: () => import('./pages/document-detail.component').then(m => m.DocumentDetailComponent)
+  },
+  {
+    path: 'dang-nhap-can-bo',
+    loadComponent: () => import('./pages/officer-login.component').then(m => m.OfficerLoginComponent),
+    data: { title: 'Đăng nhập cán bộ' }
+  },
+  {
+    path: 'verify',
+    canActivate: [officerGuard],
+    loadComponent: () => import('./pages/verification.component').then(m => m.VerificationComponent),
+    data: { title: 'Xác thực Phiếu lý lịch tư pháp' }
+  },
+  {
+    path: 'tao-qr-test',
+    loadComponent: () => import('./pages/qr-test.component').then(m => m.QrTestComponent),
+    data: { title: 'Tạo mã QR (Test)' }
   },
   {
     path: 'payments',

@@ -13,19 +13,29 @@
         .identity:hover { border-color: #D9A441; background: #fffaf0; transform: translateY(-1px); }
         .name { font-weight: 600; color: #8B1C1C; font-size: 15px; }
         .meta { font-size: 12px; color: #888; margin-top: 4px; }
+        .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
+        .badge-citizen { background: #eef3ff; color: #2a5bd7; }
+        .badge-org { background: #fbeee0; color: #b3641a; }
         .foot { margin-top: 20px; font-size: 11px; color: #999; text-align: center; }
     </style>
 </head>
 <body>
 <div class="card">
     <h1>VNeID Mô Phỏng</h1>
-    <p class="subtitle">Chọn một tài khoản công dân để đăng nhập vào hệ thống tìm kiếm hồ sơ.</p>
+    <p class="subtitle">Chọn một tài khoản định danh (công dân hoặc tổ chức) để đăng nhập.</p>
     <div class="identity-list">
         <a th:each="u : ${identities}"
            class="identity"
            th:href="@{/api/auth/mock-vneid/callback(user_id=${u.id}, redirect_uri=${redirectUri}, state=${state})}">
-            <div class="name" th:text="${u.fullName}">Họ và tên</div>
-            <div class="meta">
+            <div class="name">
+                <span th:text="${u.fullName}">Họ và tên</span>
+                <span th:if="${u.organization}" class="badge badge-org">Tổ chức</span>
+                <span th:unless="${u.organization}" class="badge badge-citizen">Công dân</span>
+            </div>
+            <div class="meta" th:if="${u.organization}">
+                Mã số thuế: <span th:text="${u.citizenId}">...</span>
+            </div>
+            <div class="meta" th:unless="${u.organization}">
                 CCCD: <span th:text="${u.citizenId}">...</span> •
                 Ngày sinh: <span th:text="${u.dob}">...</span>
             </div>

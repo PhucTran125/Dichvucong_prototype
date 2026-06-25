@@ -1,9 +1,12 @@
+export type AccountType = 'CITIZEN' | 'ORG' | 'OFFICER';
+
 export interface UserDto {
   id: string;
   fullName: string;
   dob: string;
   citizenId: string;
   address: string;
+  accountType: AccountType;
 }
 
 export interface TokenResponse {
@@ -61,4 +64,95 @@ export interface PageResponse<T> {
   size: number;
   totalElements: number;
   totalPages: number;
+}
+
+// ---------------------------------------------------------------------------
+// LLTP — Phiếu lý lịch tư pháp verification (Điều 17)
+// ---------------------------------------------------------------------------
+export interface CertificateSubjectDto {
+  fullName: string;
+  gender: string;
+  dateOfBirth: string;
+  identifyNo: string;
+  nationality: string | null;
+  ethnicity: string | null;
+  residence: string;
+  birthPlace: string;
+}
+
+export interface JudgmentDto {
+  judgmentNo: string;
+  judgmentDate: string;
+  court: string;
+  crimeNames: string;
+  penaltyMain: string;
+  penaltyAdd: string;
+  terms: string;
+  executionStatus: string;
+  remissionDate: string | null;
+}
+
+export interface BanPositionDto {
+  banPosition: string;
+  decisionNo: string;
+  decisionDate: string;
+  court: string;
+  fromDate: string;
+}
+
+export interface CertificateDto {
+  certificateNumber: string;
+  justiceNo: string;
+  issueDate: string;
+  issuePerson: string;
+  issuingAgency: string;
+  synthesisDate: string;
+  digitallySigned: boolean;
+  signedBy: string | null;
+  subject: CertificateSubjectDto;
+  crimeStatus: string;
+  hasCriminalRecord: boolean;
+  banPositionStatus: string;
+  judgments: JudgmentDto[];
+  banPositions: BanPositionDto[];
+}
+
+export interface VerifyResultDto {
+  valid: boolean;
+  verifiedVia: 'FIELDS' | 'QR' | null;
+  message: string | null;
+  certificate: CertificateDto | null;
+}
+
+export interface VerifyByFieldsRequest {
+  certificateNumber: string;
+  fullName: string;
+  dateOfBirth: string;
+  gender: string;
+}
+
+export interface OfficerLoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface DemoCertificateCode {
+  certificateNumber: string;
+  fullName: string;
+  dateOfBirth: string;
+  gender: string;
+  identifyNo: string;
+  issueDate: string;
+  crimeStatus: string;
+  authCode: string;
+  qrSignature: string;
+  verifyQrUrl: string;
+}
+
+/** Result of the dev/test QR generator (GET /api/lltp/_demo/qr). */
+export interface QrTestResult {
+  found: boolean;
+  receiveNo: string;
+  deepLink: string | null;
+  qrPngUrl: string | null;
 }

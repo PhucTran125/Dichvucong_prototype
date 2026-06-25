@@ -1,0 +1,43 @@
+# ============================================================================
+# Oracle 11g profile.  Activate with:  --spring.profiles.active=oracle
+#   (or env var SPRING_PROFILES_ACTIVE=oracle)
+#
+# Only the values that differ from application.yml are repeated here; everything
+# else (jwt, thymeleaf, server.port, logging, jpa.open-in-view, sql.init.mode...)
+# is inherited from the default application.yml.
+# ============================================================================
+spring:
+  datasource:
+    # SID-style URL (matches the provided hibernate.connection.url). For a service
+    # name instead of a SID use: jdbc:oracle:thin:@//host:port/SERVICE_NAME
+    url: "${ORACLE_URL:jdbc:oracle:thin:@localhost:1535:DBDaotao}"
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: "${ORACLE_USER:LLTP}"
+    password: "${ORACLE_PASSWORD:LLTP#123}"
+
+  jpa:
+    # Hibernate auto-detects the running Oracle version over the connection.
+    database-platform: org.hibernate.dialect.OracleDialect
+    hibernate:
+      ddl-auto: none          # schema is owned by schema-oracle.sql, not Hibernate
+    # Oracle owns its schema via schema-oracle.sql; keep scripts running as before (no defer).
+    defer-datasource-initialization: false
+    properties:
+      hibernate:
+        # Store java.util.UUID as the 36-char string form (VARCHAR2(36)) instead of
+        # the Oracle default RAW(16), so the string UUIDs in data.sql line up.
+        type:
+          preferred_uuid_jdbc_type: CHAR
+
+  sql:
+    init:
+      # First boot: the DROP TABLE statements fail because the tables don't exist yet.
+      # continue-on-error lets startup proceed; subsequent boots drop+recreate cleanly.
+      continue-on-error: true
+      schema-locations: classpath:schema-oracle.sql
+      data-locations: classpath:data.sql
+
+  # H2 console is meaningless against Oracle.
+  h2:
+    console:
+      enabled: false

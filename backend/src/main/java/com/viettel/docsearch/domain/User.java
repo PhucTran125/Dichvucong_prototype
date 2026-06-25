@@ -28,6 +28,10 @@ public class User {
     @Column(name = "address", nullable = false, length = 256)
     private String address;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account_type", nullable = false, length = 16)
+    private AccountType accountType = AccountType.CITIZEN;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
@@ -39,5 +43,8 @@ public class User {
     public LocalDate getDob() { return dob; }
     public String getCitizenId() { return citizenId; }
     public String getAddress() { return address; }
+    public AccountType getAccountType() { return accountType; }
+    public boolean isOrganization() { return accountType == AccountType.ORG; }
+    public boolean isOfficer() { return accountType == AccountType.OFFICER; }
     public Instant getCreatedAt() { return createdAt; }
 }

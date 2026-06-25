@@ -42,6 +42,15 @@ INSERT INTO app_user (id, vneid_subject, full_name, dob, citizen_id, address) VA
 INSERT INTO app_user (id, vneid_subject, full_name, dob, citizen_id, address) VALUES
 ('11111111-1111-1111-1111-000000000020', 'vneid-subject-020', 'Lại Văn Xuân',      DATE '1977-04-23', '001077000020', 'Số 55, đường Tôn Đức Thắng, quận Đống Đa, Hà Nội');
 
+-- ----------------------------------------------------------------------------
+-- ORGANIZATIONS (tài khoản định danh tổ chức) — used by the LLTP QR verify path.
+-- dob holds the incorporation date; citizen_id holds the tax code (MST).
+-- ----------------------------------------------------------------------------
+INSERT INTO app_user (id, vneid_subject, full_name, dob, citizen_id, address, account_type) VALUES
+('33333333-3333-3333-3333-000000000001', 'vneid-org-001', 'Ngân hàng TMCP Đại Việt',                 DATE '2008-01-15', '0101234567', 'Số 1, phố Liễu Giai, quận Ba Đình, Hà Nội', 'ORG');
+INSERT INTO app_user (id, vneid_subject, full_name, dob, citizen_id, address, account_type) VALUES
+('33333333-3333-3333-3333-000000000002', 'vneid-org-002', 'Công ty CP Tuyển dụng Nhân lực Việt',     DATE '2015-06-20', '0312345678', 'Số 9, đường Nguyễn Huệ, Quận 1, TP. Hồ Chí Minh', 'ORG');
+
 -- ============================================================================
 -- DOCUMENTS (20) — one per user, 4 per type, status mix
 -- Type/status distribution:
@@ -175,44 +184,47 @@ INSERT INTO document (id, owner_id, type, title, document_number, issued_at, iss
 -- ============================================================================
 -- ATTACHMENTS (40) — 2 per document, metadata only (no real files)
 -- ============================================================================
-INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES
-('33333333-3333-3333-3333-000000000101', '22222222-2222-2222-2222-000000000001', 'giay-khai-sinh-ban-chinh.pdf', 'application/pdf', 245120, 1),
-('33333333-3333-3333-3333-000000000102', '22222222-2222-2222-2222-000000000001', 'trich-luc-khai-sinh.pdf',      'application/pdf', 118400, 2),
-('33333333-3333-3333-3333-000000000201', '22222222-2222-2222-2222-000000000002', 'giay-dang-ky-ket-hon.pdf',     'application/pdf', 312800, 1),
-('33333333-3333-3333-3333-000000000202', '22222222-2222-2222-2222-000000000002', 'don-dang-ky-ket-hon.pdf',      'application/pdf', 97600,  2),
-('33333333-3333-3333-3333-000000000301', '22222222-2222-2222-2222-000000000003', 'giay-chung-nhan-dkkd.pdf',     'application/pdf', 428160, 1),
-('33333333-3333-3333-3333-000000000302', '22222222-2222-2222-2222-000000000003', 'dieu-le-cong-ty.pdf',          'application/pdf', 614400, 2),
-('33333333-3333-3333-3333-000000000401', '22222222-2222-2222-2222-000000000004', 'gplx-mat-truoc.jpg',           'image/jpeg',       84500, 1),
-('33333333-3333-3333-3333-000000000402', '22222222-2222-2222-2222-000000000004', 'gplx-mat-sau.jpg',             'image/jpeg',       76800, 2),
-('33333333-3333-3333-3333-000000000501', '22222222-2222-2222-2222-000000000005', 'giay-chung-nhan-qsdd.pdf',     'application/pdf', 512000, 1),
-('33333333-3333-3333-3333-000000000502', '22222222-2222-2222-2222-000000000005', 'ban-do-thua-dat.pdf',          'application/pdf', 389120, 2),
-('33333333-3333-3333-3333-000000000601', '22222222-2222-2222-2222-000000000006', 'giay-khai-sinh-ban-chinh.pdf', 'application/pdf', 241900, 1),
-('33333333-3333-3333-3333-000000000602', '22222222-2222-2222-2222-000000000006', 'trich-luc-khai-sinh.pdf',      'application/pdf', 115200, 2),
-('33333333-3333-3333-3333-000000000701', '22222222-2222-2222-2222-000000000007', 'giay-chung-nhan-dkkd.pdf',     'application/pdf', 408320, 1),
-('33333333-3333-3333-3333-000000000702', '22222222-2222-2222-2222-000000000007', 'dieu-le-cong-ty.pdf',          'application/pdf', 572800, 2),
-('33333333-3333-3333-3333-000000000801', '22222222-2222-2222-2222-000000000008', 'gplx-mat-truoc.jpg',           'image/jpeg',       82300, 1),
-('33333333-3333-3333-3333-000000000802', '22222222-2222-2222-2222-000000000008', 'gplx-mat-sau.jpg',             'image/jpeg',       75200, 2),
-('33333333-3333-3333-3333-000000000901', '22222222-2222-2222-2222-000000000009', 'giay-dang-ky-ket-hon.pdf',     'application/pdf', 308700, 1),
-('33333333-3333-3333-3333-000000000902', '22222222-2222-2222-2222-000000000009', 'don-dang-ky-ket-hon.pdf',      'application/pdf', 94200,  2),
-('33333333-3333-3333-3333-000000001001', '22222222-2222-2222-2222-000000000010', 'giay-khai-sinh-ban-chinh.pdf', 'application/pdf', 239800, 1),
-('33333333-3333-3333-3333-000000001002', '22222222-2222-2222-2222-000000000010', 'trich-luc-khai-sinh.pdf',      'application/pdf', 116800, 2),
-('33333333-3333-3333-3333-000000001101', '22222222-2222-2222-2222-000000000011', 'giay-chung-nhan-dkkd.pdf',     'application/pdf', 433600, 1),
-('33333333-3333-3333-3333-000000001102', '22222222-2222-2222-2222-000000000011', 'dieu-le-cong-ty.pdf',          'application/pdf', 628480, 2),
-('33333333-3333-3333-3333-000000001201', '22222222-2222-2222-2222-000000000012', 'giay-dang-ky-ket-hon.pdf',     'application/pdf', 315200, 1),
-('33333333-3333-3333-3333-000000001202', '22222222-2222-2222-2222-000000000012', 'don-dang-ky-ket-hon.pdf',      'application/pdf', 99200,  2),
-('33333333-3333-3333-3333-000000001301', '22222222-2222-2222-2222-000000000013', 'gplx-mat-truoc.jpg',           'image/jpeg',       85600, 1),
-('33333333-3333-3333-3333-000000001302', '22222222-2222-2222-2222-000000000013', 'gplx-mat-sau.jpg',             'image/jpeg',       77400, 2),
-('33333333-3333-3333-3333-000000001401', '22222222-2222-2222-2222-000000000014', 'giay-khai-sinh-ban-chinh.pdf', 'application/pdf', 247100, 1),
-('33333333-3333-3333-3333-000000001402', '22222222-2222-2222-2222-000000000014', 'trich-luc-khai-sinh.pdf',      'application/pdf', 119200, 2),
-('33333333-3333-3333-3333-000000001501', '22222222-2222-2222-2222-000000000015', 'giay-chung-nhan-qsdd.pdf',     'application/pdf', 504000, 1),
-('33333333-3333-3333-3333-000000001502', '22222222-2222-2222-2222-000000000015', 'ban-do-thua-dat.pdf',          'application/pdf', 381440, 2),
-('33333333-3333-3333-3333-000000001601', '22222222-2222-2222-2222-000000000016', 'giay-chung-nhan-dkkd.pdf',     'application/pdf', 421000, 1),
-('33333333-3333-3333-3333-000000001602', '22222222-2222-2222-2222-000000000016', 'dieu-le-cong-ty.pdf',          'application/pdf', 591360, 2),
-('33333333-3333-3333-3333-000000001701', '22222222-2222-2222-2222-000000000017', 'giay-dang-ky-ket-hon.pdf',     'application/pdf', 309600, 1),
-('33333333-3333-3333-3333-000000001702', '22222222-2222-2222-2222-000000000017', 'don-dang-ky-ket-hon.pdf',      'application/pdf', 95700,  2),
-('33333333-3333-3333-3333-000000001801', '22222222-2222-2222-2222-000000000018', 'gplx-mat-truoc.jpg',           'image/jpeg',       83100, 1),
-('33333333-3333-3333-3333-000000001802', '22222222-2222-2222-2222-000000000018', 'gplx-mat-sau.jpg',             'image/jpeg',       76200, 2),
-('33333333-3333-3333-3333-000000001901', '22222222-2222-2222-2222-000000000019', 'giay-chung-nhan-qsdd.pdf',     'application/pdf', 488320, 1),
-('33333333-3333-3333-3333-000000001902', '22222222-2222-2222-2222-000000000019', 'ban-do-thua-dat.pdf',          'application/pdf', 372800, 2),
-('33333333-3333-3333-3333-000000002001', '22222222-2222-2222-2222-000000000020', 'giay-chung-nhan-qsdd.pdf',     'application/pdf', 521600, 1),
-('33333333-3333-3333-3333-000000002002', '22222222-2222-2222-2222-000000000020', 'ban-do-thua-dat.pdf',          'application/pdf', 397440, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000101', '22222222-2222-2222-2222-000000000001', 'giay-khai-sinh-ban-chinh.pdf', 'application/pdf', 245120, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000102', '22222222-2222-2222-2222-000000000001', 'trich-luc-khai-sinh.pdf',      'application/pdf', 118400, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000201', '22222222-2222-2222-2222-000000000002', 'giay-dang-ky-ket-hon.pdf',     'application/pdf', 312800, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000202', '22222222-2222-2222-2222-000000000002', 'don-dang-ky-ket-hon.pdf',      'application/pdf', 97600,  2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000301', '22222222-2222-2222-2222-000000000003', 'giay-chung-nhan-dkkd.pdf',     'application/pdf', 428160, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000302', '22222222-2222-2222-2222-000000000003', 'dieu-le-cong-ty.pdf',          'application/pdf', 614400, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000401', '22222222-2222-2222-2222-000000000004', 'gplx-mat-truoc.jpg',           'image/jpeg',       84500, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000402', '22222222-2222-2222-2222-000000000004', 'gplx-mat-sau.jpg',             'image/jpeg',       76800, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000501', '22222222-2222-2222-2222-000000000005', 'giay-chung-nhan-qsdd.pdf',     'application/pdf', 512000, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000502', '22222222-2222-2222-2222-000000000005', 'ban-do-thua-dat.pdf',          'application/pdf', 389120, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000601', '22222222-2222-2222-2222-000000000006', 'giay-khai-sinh-ban-chinh.pdf', 'application/pdf', 241900, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000602', '22222222-2222-2222-2222-000000000006', 'trich-luc-khai-sinh.pdf',      'application/pdf', 115200, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000701', '22222222-2222-2222-2222-000000000007', 'giay-chung-nhan-dkkd.pdf',     'application/pdf', 408320, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000702', '22222222-2222-2222-2222-000000000007', 'dieu-le-cong-ty.pdf',          'application/pdf', 572800, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000801', '22222222-2222-2222-2222-000000000008', 'gplx-mat-truoc.jpg',           'image/jpeg',       82300, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000802', '22222222-2222-2222-2222-000000000008', 'gplx-mat-sau.jpg',             'image/jpeg',       75200, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000901', '22222222-2222-2222-2222-000000000009', 'giay-dang-ky-ket-hon.pdf',     'application/pdf', 308700, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000000902', '22222222-2222-2222-2222-000000000009', 'don-dang-ky-ket-hon.pdf',      'application/pdf', 94200,  2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001001', '22222222-2222-2222-2222-000000000010', 'giay-khai-sinh-ban-chinh.pdf', 'application/pdf', 239800, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001002', '22222222-2222-2222-2222-000000000010', 'trich-luc-khai-sinh.pdf',      'application/pdf', 116800, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001101', '22222222-2222-2222-2222-000000000011', 'giay-chung-nhan-dkkd.pdf',     'application/pdf', 433600, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001102', '22222222-2222-2222-2222-000000000011', 'dieu-le-cong-ty.pdf',          'application/pdf', 628480, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001201', '22222222-2222-2222-2222-000000000012', 'giay-dang-ky-ket-hon.pdf',     'application/pdf', 315200, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001202', '22222222-2222-2222-2222-000000000012', 'don-dang-ky-ket-hon.pdf',      'application/pdf', 99200,  2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001301', '22222222-2222-2222-2222-000000000013', 'gplx-mat-truoc.jpg',           'image/jpeg',       85600, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001302', '22222222-2222-2222-2222-000000000013', 'gplx-mat-sau.jpg',             'image/jpeg',       77400, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001401', '22222222-2222-2222-2222-000000000014', 'giay-khai-sinh-ban-chinh.pdf', 'application/pdf', 247100, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001402', '22222222-2222-2222-2222-000000000014', 'trich-luc-khai-sinh.pdf',      'application/pdf', 119200, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001501', '22222222-2222-2222-2222-000000000015', 'giay-chung-nhan-qsdd.pdf',     'application/pdf', 504000, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001502', '22222222-2222-2222-2222-000000000015', 'ban-do-thua-dat.pdf',          'application/pdf', 381440, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001601', '22222222-2222-2222-2222-000000000016', 'giay-chung-nhan-dkkd.pdf',     'application/pdf', 421000, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001602', '22222222-2222-2222-2222-000000000016', 'dieu-le-cong-ty.pdf',          'application/pdf', 591360, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001701', '22222222-2222-2222-2222-000000000017', 'giay-dang-ky-ket-hon.pdf',     'application/pdf', 309600, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001702', '22222222-2222-2222-2222-000000000017', 'don-dang-ky-ket-hon.pdf',      'application/pdf', 95700,  2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001801', '22222222-2222-2222-2222-000000000018', 'gplx-mat-truoc.jpg',           'image/jpeg',       83100, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001802', '22222222-2222-2222-2222-000000000018', 'gplx-mat-sau.jpg',             'image/jpeg',       76200, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001901', '22222222-2222-2222-2222-000000000019', 'giay-chung-nhan-qsdd.pdf',     'application/pdf', 488320, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000001902', '22222222-2222-2222-2222-000000000019', 'ban-do-thua-dat.pdf',          'application/pdf', 372800, 2);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000002001', '22222222-2222-2222-2222-000000000020', 'giay-chung-nhan-qsdd.pdf',     'application/pdf', 521600, 1);
+INSERT INTO document_attachment (id, document_id, file_name, mime_type, size_bytes, sort_order) VALUES ('33333333-3333-3333-3333-000000002002', '22222222-2222-2222-2222-000000000020', 'ban-do-thua-dat.pdf',          'application/pdf', 397440, 2);
+
+-- LLTP demo certificates live in data-lltp-demo.sql (loaded only by the default/H2 profile,
+-- see spring.sql.init.data-locations in application.yml). Under the 'oracle' profile the
+-- real DBDaotao tables provide the certificates, so the demo rows are not seeded there.
